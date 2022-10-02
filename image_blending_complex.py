@@ -13,7 +13,6 @@ frames = imageio.mimread(imageio.core.urlopen(url).read(), '.gif')
 for i in range(len(frames)):
     frames[i] = cv2.resize(frames[i], dim)
 fg = cv2.cvtColor(fg, cv2.COLOR_BGR2RGBA)
-fg[mask[:,:,3] == 0] = 0
 alpha = 0.8
 results = []
 h = height // 2
@@ -27,8 +26,7 @@ for i in range(len(frames)):
     result[:h,:,:][mask_top[:,:,3] == 0] = frames[i][:h,:,:][mask_top[:,:,3]==0]
     results.append(result)
 for i in range(len(results)):
-    bgs_bot  = frames[i][h:,:,:]
     results[i][h:,:,:][mask_bot[:,:,3] != 0] = fg_bot[mask_bot[:,:,3] != 0] * alpha \
-    + bgs_bot[mask_bot[:,:,3] != 0] * (1 - alpha)
+    + frames[i][h:,:,:][mask_bot[:,:,3] != 0] * (1 - alpha)
     results[i][h:,:,:][mask_bot[:,:,3] == 0] = frames[i][h:,:,:][mask_bot[:,:,3]==0]
 imageio.mimsave('result_complex.gif', results)
