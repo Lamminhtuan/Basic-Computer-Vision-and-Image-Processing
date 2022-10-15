@@ -30,7 +30,7 @@ h_b, w_b = tem_gray.shape
 h_c, w_c = tem_big_gray.shape
 
 
-thresh_hold = 0.95
+thresh_hold = 0.945
 thresh_hold_big = 0.97
 
 height = (h_a - h_b) + 1
@@ -45,7 +45,7 @@ for (xb, yb) in zip(xb_points, yb_points):
     boxes.append((xb, yb, xb + w_b, yb + h_b))
 for (x1b, y1b, x2b, y2b) in boxes:
     cv2.rectangle(inp, (x1b, y1b), (x2b, y2b), (255, 0, 0), 1)
-    
+
 height_big = (h_a - h_c) + 1
 width_big = (w_a - w_c) + 1
 result_big = np.ones((height_big, width_big), dtype=np.float64)
