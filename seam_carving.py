@@ -14,4 +14,3 @@ b = calculate_gradient(a).astype(np.uint8)
 cv2.imshow('grad', b)
 cv2.waitKey(0)
 
-
