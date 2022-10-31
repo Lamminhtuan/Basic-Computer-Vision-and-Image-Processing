@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-n = int(input('Nhập n: '))
+n = int(input('Enter n: '))
 n_line = int(0.7 * n)
 n_non = n - n_line
 x = np.linspace(0, n * 10, n_line, dtype=int)
 y = 5 * x + 3
-x_noise = np.random.randint(n * 10, size=n_line)
-y_noise = np.random.randint(n * 40, size=n_line)
+x_noise = np.random.randint(n * 10, size=n_non)
+y_noise = np.random.randint(n * 40, size=n_non)
 x_zip = np.append(x, x_noise)
 y_zip = np.append(y, y_noise)
 cor = list(zip(x_zip, y_zip))
