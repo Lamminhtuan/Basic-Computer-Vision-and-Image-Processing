@@ -1,16 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-
-x = np.arange(7)
+n = int(input('Nhập n: '))
+n_line = int(0.7 * n)
+n_non = n - n_line
+x = np.linspace(0, n * 10, n_line, dtype=int)
 y = 5 * x + 3
-x_noise = np.random.randint(10, size=3)
-y_noise = np.random.randint(40, size=3)
-x = np.append(x, x_noise)
-y = np.append(y, y_noise)
-cor = list(zip(x, y))
-n = len(cor)
-n_oline = int(0.7 * n)
+x_noise = np.random.randint(n * 10, size=n_line)
+y_noise = np.random.randint(n * 40, size=n_line)
+x_zip = np.append(x, x_noise)
+y_zip = np.append(y, y_noise)
+cor = list(zip(x_zip, y_zip))
 cor_ = cor.copy()
 def plot_line(a, b, c, x_range, y_range):
     if b != 0:
@@ -20,10 +20,11 @@ def plot_line(a, b, c, x_range, y_range):
         x_ = np.ones(y_range) * (-c/a)
         y_ = np.arange(y_range)
 
-    plt.scatter(x, y)
+    plt.scatter(x, y, color = 'g')
+    plt.scatter(x_noise, y_noise, color = 'r')
     plt.plot(x_, y_)
     plt.show(block=False)
-    plt.pause(1)
+    plt.pause(2)
     plt.close()
 
 
@@ -61,12 +62,11 @@ while True:
     cor1 = cor.pop()
     cor2 = cor.pop()
     a, b, c = line_equation(cor1, cor2)
-    plot_line(a, b, c, 11, 41)
+    plot_line(a, b, c, n * 10, n * 40)
     for i in cor:
         if checkalongline(i, a, b, c) == True:
             count += 1
-
-    if count == n_oline:
+    if count == n_line:
         if (b < 0):
             print('{0}x{1}y={2}'.format(a, b, c))
         else:
