@@ -43,6 +43,7 @@ def plot_line(a, b, c):
     plt.scatter(x, y, color = 'g')
     plt.scatter(x_noise, y_noise, color = 'r')
     plt.plot(x_, y_)
+    plt.title('Line\'s Equation Finding')
     plt.show(block=False)
     plt.pause(2)
     plt.close()
@@ -86,7 +87,7 @@ while True:
     for i in cor:
         if checkalongline(i, a, b, c) == True:
             count += 1
-    if count == n_line:
+    if count >= n_line:
         if (b < 0):
             print('Line\'s Equation found: {0}x{1}y={2}'.format(a, b, c))
         else:
