@@ -50,8 +50,10 @@ def crop_multi_columns(img, scale):
     for i in range(w - new_w):
         img = crop_column(img)
     return img
-scale = float(input('Enter scale for cropping: '))
+inp = int(input('Enter percent for cropping horizontally: '))
+scale = inp / 100
 result = crop_multi_columns(a, scale)
+print('Original size: ',a.shape[:-1], 'After cropped size: ', result.shape[:-1])
 cv2.imshow('original', a)
 cv2.imshow('cropped', result)
 cv2.waitKey(0)
