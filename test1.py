@@ -1,8 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
-x = np.arange(7)
-y = -3 * x + 3
-fig = plt.figure()
-plt.plot(x, y)
-plt.show(block=False)
-plt.close()
+import cv2 
+a = cv2.imread('images/relationship.jpg')
+b, g, r = cv2.split(a)
+result = b + g + r
+print(result.shape)
