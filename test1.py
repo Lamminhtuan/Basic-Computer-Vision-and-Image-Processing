@@ -1,4 +1,4 @@
-import cv2 
-a = cv2.imread('images/relationship.jpg')
-cv2.imshow(a.shape[:-1], a)
-cv2.waitKey(0)
+import numpy as np
+a = range(5)
+for i in range(5, -1, -1):
+    print(i)
