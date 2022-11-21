@@ -48,6 +48,7 @@ def line_detect(img):
     #map from matrix to Hough space
     theta = list_[1] * 0.01 - 3.14
     for i in range(len(rho)):
+        #polar to cartesian
         a = np.cos(theta[i])
         b = np.sin(theta[i])
         #x0 = rho * cos(theta)
