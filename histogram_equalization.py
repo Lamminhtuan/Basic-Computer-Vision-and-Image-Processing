@@ -17,7 +17,7 @@ def hv(hist):
     for i in range(1, len(hist)):
         cdf[i] = cdf[i-1] + hist[i]
     #formula
-    cdf = np.around((cdf - cdf.min()) / (cdf[-1] - cdf.min()) * 255)
+    cdf = np.rint((cdf - cdf.min()) / (cdf[-1] - cdf.min()) * 255)
     return cdf
 #equalize
 def equalize(img):
