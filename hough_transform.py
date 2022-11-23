@@ -41,7 +41,7 @@ def line_detect(img):
                     if rho >= 0 and rho < max_dist:
                         #map from Hough space to matrix
                         H[int(rho), int((theta + 3.14)/0.01)] += 1
-    threshold = 251
+    threshold = 230
     #voting...
     list_ = np.where(H >= threshold)
     rho = list_[0]
