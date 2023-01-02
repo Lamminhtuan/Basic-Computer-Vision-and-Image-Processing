@@ -23,7 +23,7 @@ d = {"Blue Kernel": (3, 50),
 cv2.namedWindow("Track Bars")
 for i in d:
     cv2.createTrackbar(i, "Track Bars", *d[i], id)
-img = cv2.imread('images/tiger.jpg')
+img = cv2.imread('images/g63.jpg')
 while True:
     img_copy = img.copy()
     processed = process(img, *(cv2.getTrackbarPos(i, "Track Bars") for i in d))
