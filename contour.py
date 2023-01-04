@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-ori = cv2.imread('./images/tiger.jpg')
+ori = cv2.imread('./images/g63.jpg')
 bg = cv2.imread('./images/background.jpg')
 
 h = ori.shape[0]
@@ -35,10 +35,10 @@ def preprocessing(image):
     # edges = cv2.erode(edges, kernel_2, iterations = 1)
     return edges
 img = cv2.GaussianBlur(img, (3,3), 0)
-# thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-#             cv2.THRESH_BINARY_INV,9, 3)
+thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
+            cv2.THRESH_BINARY_INV,9, 3)
 canny = auto_canny(img)
-ret,thresh = cv2.threshold(canny,156,255,cv2.THRESH_BINARY)
+# ret,thresh = cv2.threshold(canny,156,255,cv2.THRESH_BINARY)
 
 edges = preprocessing(thresh)
 # edges = cv2.dilate(edges, kernel_1, iterations = 1)
