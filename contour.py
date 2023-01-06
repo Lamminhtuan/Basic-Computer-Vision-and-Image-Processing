@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-ori = cv2.imread('./images/g63.jpg')
+ori = cv2.imread('./images/airmax.jpg')
 bg = cv2.imread('./images/background.jpg')
-
+ori = cv2.resize(ori, (720, 720))
 h = ori.shape[0]
 w = ori.shape[1]
 #Convert to grayscale
@@ -25,7 +25,7 @@ def preprocessing(image):
     kernel_2 = np.ones((5,5), np.uint8)
     kernel_3 = np.ones((3,3), np.uint8)
     
-    edges = cv2.dilate(image, kernel, iterations = 1)
+    edges = cv2.dilate(image, kernel, iterations = 2)
     # edges = cv2.erode(edges, kernel, iterations = 1)
     # edges = cv2.dilate(edges, kernel_1, iterations = 1)
     # edges = cv2.erode(edges, kernel_1, iterations = 1)
@@ -36,9 +36,10 @@ def preprocessing(image):
     return edges
 img = cv2.GaussianBlur(img, (3,3), 0)
 thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-            cv2.THRESH_BINARY_INV,9, 3)
-canny = auto_canny(img)
-# ret,thresh = cv2.threshold(canny,156,255,cv2.THRESH_BINARY)
+            cv2.THRESH_BINARY_INV,19, 3)
+# ret,thresh = cv2.threshold(img,0,255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+canny = auto_canny(thresh)
+
 
 edges = preprocessing(thresh)
 # edges = cv2.dilate(edges, kernel_1, iterations = 1)
@@ -48,7 +49,7 @@ cnt = sorted(cv2.findContours(edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_AP
 mask = np.zeros((h, w), np.uint8)
 kernel = np.ones((5,5), np.uint8)
 masked = cv2.drawContours(mask, [cnt], -1, 255, -1)
-masked = cv2.erode(masked, kernel, iterations = 2)
+masked = cv2.erode(masked, kernel, iterations = 3)
 # masked = preprocessing(masked)
 # con = cv2.drawContours(ori, [cnt], -1, (255,0,0), 5)
 # masked = cv2.GaussianBlur(masked, (5, 5), 0)
@@ -56,6 +57,6 @@ dst_fg = cv2.bitwise_and(ori, ori, mask=masked)
 mask_inversed = cv2.bitwise_not(masked)
 dst_bg = cv2.bitwise_and(bg, bg, mask=mask_inversed)
 dst = cv2.bitwise_or(dst_fg, dst_bg)
-cv2.imshow('Ori', masked)
+cv2.imshow('Ori', edges)
 cv2.imshow('Result', dst_fg)
 cv2.waitKey(0)
