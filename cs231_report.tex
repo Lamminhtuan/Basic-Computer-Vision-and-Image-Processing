@@ -18,7 +18,7 @@
 
 
 
-\author{\IEEEauthorblockN{Lâm Minh Tuấn}
+\author{\IEEEauthorblockN{Lâm Minh Tuấn - 20520843}
 \IEEEauthorblockA{\textit{Trường Đại học Công nghệ Thông tin - ĐHQG TP.HCM} \\
 20520843@gm.uit.edu.vn\\
 }
@@ -28,7 +28,7 @@
 
 
 \section{Giới thiệu bài toán và lý do chọn bài toán}
-Xóa nền là một trong những tác vụ phổ biến và quan trọng nhất trong các lĩnh vực Thị giác máy tính và Xử lý ảnh. Ta có thể bắt gặp ứng dụng của việc xóa nền ở bất cứ đâu trên các nền tảng công nghệ như Zoom, TikTok, Instagram, Facebook… Ngoài ra, xóa nền để phát hiện tiền cảnh còn được ứng dụng vào thực tiễn như mã hóa video dựa trên nội dung, giám sát giao thông, nhận dạng chuyển động theo thời gian thực, tương tác người-máy… Bài toán xóa nền chưa bao giờ là một bài toán đơn giản do trên thực tế, các hình ảnh mà ta đưa vào thực hiện xóa nền để có thể áp dụng vào thực tiễn đều là những hình ảnh đời thật với màu sắc phức tạp, đổ bóng, độ tương phản thấp… gây khó khăn cho máy tính. Vì vậy hiện nay phương pháp xóa nền tốt nhất chính là áp dụng Học sâu và Mạng thần kinh tích chập, tuy nhiên do giới hạn phạm vi của môn học, em sẽ không dùng các kĩ thuật liên quan đến Học máy như hai phương pháp trên mà chỉ dùng những phương pháp xử lý trên ảnh đã được học để có thể thực hiện công việc xóa nền với kết quả tương đối. Một trong những phương pháp có thể vận dụng để xóa nền chính là Contour Detection.
+Xóa nền là một trong những tác vụ phổ biến và quan trọng nhất trong các lĩnh vực Thị giác máy tính và Xử lý ảnh. Ta có thể bắt gặp ứng dụng của việc xóa nền ở bất cứ đâu trên các nền tảng công nghệ như Zoom, TikTok, Instagram, Facebook… Ngoài ra, xóa nền để phát hiện tiền cảnh còn được ứng dụng vào thực tiễn như mã hóa video dựa trên nội dung, giám sát giao thông, nhận dạng chuyển động theo thời gian thực, tương tác người-máy… Nhận thấy tầm quan  trọng của bài toán xóa nền trong cuộc sống, nhóm chúng em đã chọn bài toán này cho đồ án cuối kì của môn học. tuy nhiên bài toán xóa nền chưa bao giờ là một bài toán đơn giản do trên thực tế, các hình ảnh mà ta đưa vào thực hiện xóa nền để có thể áp dụng vào thực tiễn đều là những hình ảnh đời thật với màu sắc phức tạp, đổ bóng, độ tương phản thấp… gây khó khăn cho máy tính. Vì vậy hiện nay phương pháp xóa nền tốt nhất chính là áp dụng Học sâu và Mạng thần kinh tích chập, tuy nhiên do giới hạn phạm vi của môn học, em sẽ không dùng các kĩ thuật liên quan đến Học máy như hai phương pháp trên mà chỉ dùng những phương pháp xử lý trên ảnh đã được học để có thể thực hiện công việc xóa nền với kết quả tương đối. Một trong những phương pháp có thể vận dụng để xóa nền chính là Contour Detection.
 \section{Khái niệm đường viền (Contour) và ý tưởng thuật toán}
 Đường viền có thể được định nghĩa đơn giản là một đường cong nối tất cả các điểm liên tục, có cùng màu hoặc cường độ màu sắc. Khu vực có cùng màu hoặc cường độ đồng nhất này bao quanh đối tượng mà ta coi là chủ thể. Về cơ bản, thuật toán Contour Detection hoạt động tương tự như các thuật toán phát hiện cạnh nhưng các cạnh phải tạo thành một đường cong khép kín thì thuật toán Contour Detection mới xem đó là đường viền. Để xóa nền bằng thuật toán này, ta chỉ cần xem (các) đối tượng nằm trong đường viền lớn nhất là chủ thể cần giữ lại, và phần hình nằm ngoài đường viền lớn nhất này ta sẽ xem là nền, do đó ta xóa phần hình nằm ngoài này và kết quả ta thu được chủ thể với nền đã được xóa đi.
 
@@ -79,7 +79,7 @@ Tiến hành xóa phần hình bên ngoài đường viền lớn nhất vừa t
  \begin{enumerate}
      \item Ý tưởng đơn giản, dễ hiểu.
      \item Dễ thực hiện.
-     \item Cho kết quả khá tốt trên những bức ảnh có chủ thể tách biệt với nền (như ảnh chromakey)/
+     \item Cho kết quả khá tốt trên những bức ảnh có chủ thể tách biệt với nền (như ảnh chromakey).
  \end{enumerate}
  \subsection{Nhược điểm và hướng phát triển}
  \begin{enumerate}
@@ -128,7 +128,7 @@ biểu thị đỉnh đồi trong khi các pixel cường độ thấp biểu th
 \label{fig}
 \end{figure}
  \FloatBarrier
-Ta nhận thấy được ở hình 10 và 11, phần gần đế giày do có màu trắng trùng màu với phần nền nên các thuật toán tìm cạnh không tìm được cạnh ở đó nên đường viền lớn nhất tìm được không bao gồm cạnh đó. Ta sử dụng phép biến đổi Dilate để làm đầy cạnh đó, giúp cho thuật toán tìm đường viền tìm ra được đầy đủ đường viền bao quanh chiếc giày, sau đó lại dùng phép Erode để làm mượt phần đường viền để cho ra kết quả đẹp hơn.
+Ta nhận thấy được ở hình 10 và 11, phần gần đế giày do có màu trắng trùng màu với phần nền nên các thuật toán tìm cạnh không tìm được cạnh ở đó nên đường viền lớn nhất tìm được không bao gồm cạnh đó. Ta sử dụng phép Dilate để làm đầy cạnh đó, giúp cho thuật toán tìm đường viền tìm ra được đầy đủ đường viền bao quanh chiếc giày, sau đó lại dùng phép Erode để làm mượt phần đường viền để cho ra kết quả đẹp hơn.
 
  \begin{figure}[!htb]
 \centerline{\includegraphics[scale=0.5]{anhnd7.png}}
@@ -196,12 +196,12 @@ Ta nhận thấy được ở hình 10 và 11, phần gần đế giày do có m
 \end{tabular}
 \end{center}
 \end{table}
-Ngoài ra dựa vào bảng khung hình trên giây (FPS), ta thấy được thuật toán Otsu Threholding cho hiệu suất xử lý cao nhất, tiếp đến là Color Masking, đứng thứ ba là Contour Detection và tệ nhất là K-Means Method.
+Ngoài ra dựa vào bảng khung hình trên giây (FPS) của video kết quả của từng phương pháp, ta thấy được thuật toán Otsu Threholding cho hiệu suất xử lý cao nhất, tiếp đến là Color Masking, đứng thứ ba là Contour Detection và tệ nhất là K-Means Method.
 Ưu điểm của cả 4 phương pháp này là dễ cài đặt và sử dụng, phương pháp đơn giản và dễ hiểu. Tuy nhiên cũng như các phương pháp xóa nền không dùng Máy học khác, cả 4 phương pháp này đều chỉ cho ra kết quả tốt nhất trên các ảnh không quá phức tạp.
 \section{Tổng kết}
  Xóa nền sử dụng Contour Detection là phương pháp xóa nền đơn giản, dễ hiểu, không sử dụng đến Máy học, cho hiệu quả cao trên những ảnh có chủ thể tách biệt với nền (như các ảnh nền xanh). Tuy nhiên phương pháp này lại bộc lộ rõ những khuyết điểm của mình trên những bức ảnh thực tế khi ảnh có nền phức tạp. Nhìn chung, phương pháp này thích hợp cho các ảnh đã được xử lý hậu trường chứ không thích hợp với những bức ảnh ngoài thực tế. 
 \begin{thebibliography}{00}
-\bibitem{b1} \url{https://en.wikipedia.org/wiki/Foreground_detection}}
+\bibitem{b1} \url{https://en.wikipedia.org/wiki/Foreground_detection}
 \bibitem{b2} \url{https://machinelearningknowledge.ai/image-segmentation-in-python-opencv/#ii_Contour_Detection}
 \bibitem{b3} \url{https://bleedai.com/contour-detection-101-the-basics-pt1/}
 \bibitem{b4} \url{https://learnopencv.com/contour-detection-using-opencv-python-c/}
