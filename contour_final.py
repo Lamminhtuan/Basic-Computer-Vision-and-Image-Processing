@@ -16,13 +16,12 @@ def preprocessing(image):
     edges = cv2.dilate(image, kernel_dil, iterations = 1)
     return edges
 flag = False
-size = (720, 480)
-result = cv2.VideoWriter('demo.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
+size = (1280, 720)
 while cap.isOpened():
     ret, frame = cap.read()
-    frame = cv2.resize(frame, size)
     if not ret:
         break
+    frame = cv2.resize(frame, size)
     h = frame.shape[0]
     w = frame.shape[1]
     if flag == False:
@@ -33,9 +32,10 @@ while cap.isOpened():
     canny = cv2.Canny(img, 9, 0, True)
     edges = preprocessing(canny)
     contours = cv2.findContours(edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)[-2]
+    #Nếu tìm được đường viền
     if contours:
+        #Lấy đường viền lớn nhất
         cnt = max(contours, key=cv2.contourArea)
-
         mask = np.zeros((h, w), np.uint8)
         masked = cv2.drawContours(mask, [cnt], -1, 255, -1)
         kernel = np.ones((50,50), np.uint8)
@@ -47,12 +47,10 @@ while cap.isOpened():
         dst_bg = cv2.bitwise_and(bg, bg, mask=mask_inversed)
         dst = cv2.bitwise_or(dst_fg, dst_bg)
         cv2.imshow('frame', dst_fg)
-        result.write(dst_fg)
     else:
         cv2.imshow('frame', frame)
-        result.write(frame)
     if cv2.waitKey(25) == ord('q'):
         break
 cap.release()
 cv2.destroyAllWindows()
-print('Lưu video thành công!')
+print('Hết video')
