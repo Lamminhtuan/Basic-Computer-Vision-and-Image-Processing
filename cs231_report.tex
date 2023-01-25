@@ -18,7 +18,7 @@
 
 
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Lâm Minh Tuấn}
+\author{\IEEEauthorblockN{Lâm Minh Tuấn}
 \IEEEauthorblockA{\textit{Trường Đại học Công nghệ Thông tin - ĐHQG TP.HCM} \\
 20520843@gm.uit.edu.vn\\
 }
@@ -169,7 +169,36 @@ Ta nhận thấy được ở hình 10 và 11, phần gần đế giày do có m
 \end{figure}
  \FloatBarrier
  Qua hai ví dụ trên ta thấy được hai phép Dilate và Erode cải thiện đáng kể chất lượng của ảnh xóa nền cũng như giải quyết được nhược điểm cố hữu của phương pháp.
- \section{Tổng kết}
+\section{So sánh với các phương pháp khác}
+  \begin{figure}[!htb]
+\centerline{\includegraphics[scale=0.3]{anhss1.png}}
+\caption{Kết quả của các phương pháp trên ảnh đơn giản.}
+\label{fig}
+\end{figure}
+ \FloatBarrier
+ Ở ảnh đơn giản, Contour Detection cho kết quả khá tốt so với K-Means Method và Otsu Thresholding. Tuy nhiên lại lép vế một chút so với Color Masking.
+  \begin{figure}[!htb]
+\centerline{\includegraphics[scale=0.3]{anhss2.png}}
+\caption{Kết quả của các phương pháp trên ảnh phức tạp.}
+\label{fig}
+\end{figure}
+ \FloatBarrier
+ Đối với ảnh phức tạp, Color Masking vẫn cho ra kết quả khá tốt, do ảnh có một đường viền bao quanh khung hình nên Contout Detection nghĩ đây là đường viền chứa đối tượng và lấy luôn đường viền này nên kết quả cho ra không khác so với ảnh gốc. K-Means Method và Otsu Thresholding cho kết quả không được tốt lắm trên các ảnh phức tạp.
+ \FloatBarrier
+ \begin{table}[htbp]
+ \caption{Bảng so sánh FPS của các phương pháp}
+\begin{center}
+\begin{tabular}{|l|cccc|}
+\hline
+             & \multicolumn{4}{c|}{\textbf{Phương pháp}}                                                                                                                                                                                                                                                                      \\ \hline
+             & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Color\\  Masking\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Contour\\ Detection\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}K-Means\\ Method\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Otsu\\ Thresholding\end{tabular} \\ \hline
+\textbf{FPS} & \multicolumn{1}{c|}{21}                                                       & \multicolumn{1}{c|}{16}                                                          & \multicolumn{1}{c|}{12}                                                       & 24                                                          \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+Ngoài ra dựa vào bảng khung hình trên giây (FPS), ta thấy được thuật toán Otsu Threholding cho hiệu suất xử lý cao nhất, tiếp đến là Color Masking, đứng thứ ba là Contour Detection và tệ nhất là K-Means Method.
+Ưu điểm của cả 4 phương pháp này là dễ cài đặt và sử dụng, phương pháp đơn giản và dễ hiểu. Tuy nhiên cũng như các phương pháp xóa nền không dùng Máy học khác, cả 4 phương pháp này đều chỉ cho ra kết quả tốt nhất trên các ảnh không quá phức tạp.
+\section{Tổng kết}
  Xóa nền sử dụng Contour Detection là phương pháp xóa nền đơn giản, dễ hiểu, không sử dụng đến Máy học, cho hiệu quả cao trên những ảnh có chủ thể tách biệt với nền (như các ảnh nền xanh). Tuy nhiên phương pháp này lại bộc lộ rõ những khuyết điểm của mình trên những bức ảnh thực tế khi ảnh có nền phức tạp. Nhìn chung, phương pháp này thích hợp cho các ảnh đã được xử lý hậu trường chứ không thích hợp với những bức ảnh ngoài thực tế. 
 \begin{thebibliography}{00}
 \bibitem{b1} \url{https://en.wikipedia.org/wiki/Foreground_detection}}

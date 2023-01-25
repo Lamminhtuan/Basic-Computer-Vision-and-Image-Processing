@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 ori = cv2.imread('./images/airmax.jpg')
 bg = cv2.imread('./images/background.jpg')
-ori = cv2.resize(ori, (720, 720))
+# ori = cv2.resize(ori, (720, 720))
 h = ori.shape[0]
 w = ori.shape[1]
 #Convert to grayscale
@@ -25,7 +25,7 @@ def preprocessing(image):
     kernel_2 = np.ones((5,5), np.uint8)
     kernel_3 = np.ones((3,3), np.uint8)
     
-    edges = cv2.dilate(image, kernel, iterations = 2)
+    edges = cv2.dilate(image, kernel, iterations = 3)
     # edges = cv2.erode(edges, kernel, iterations = 1)
     # edges = cv2.dilate(edges, kernel_1, iterations = 1)
     # edges = cv2.erode(edges, kernel_1, iterations = 1)

@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import time
 from statistics import mean
+#Đường dẫn chứa file test
 cap = cv2.VideoCapture('./images/TEST.mp4')
 bg = cv2.imread('./images/background.jpg')
 def auto_canny(image, sigma = 0.33):
@@ -30,13 +31,9 @@ while cap.isOpened():
     img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     img = cv2.GaussianBlur(img, (3,3), 1)
     thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 5)
-    
-    # ret, thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     canny = cv2.Canny(img, 9, 0, True)
     edges = preprocessing(canny)
-
     cnt = sorted(cv2.findContours(edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)[-2], key=cv2.contourArea)[-1]
-
     mask = np.zeros((h, w), np.uint8)
     masked = cv2.drawContours(mask, [cnt], -1, 255, -1)
     kernel = np.ones((50,50), np.uint8)
@@ -52,10 +49,8 @@ while cap.isOpened():
     fps_list.append(fps)
     prev_frame_time = new_frame_time
     print(max(fps_list))
-    
     cv2.imshow('frame', dst_fg)
     if cv2.waitKey(25) == ord('q'):
         break
-
 cap.release()
 cv2.destroyAllWindows()
