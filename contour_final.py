@@ -3,7 +3,7 @@ import numpy as np
 import time
 from statistics import mean
 #Đường dẫn chứa file test
-cap = cv2.VideoCapture('./images/TEST.mp4')
+cap = cv2.VideoCapture('./images/test.mp4')
 bg = cv2.imread('./images/background.jpg')
 def auto_canny(image, sigma = 0.33):
     v = np.median(image)
@@ -16,12 +16,11 @@ def preprocessing(image):
     edges = cv2.dilate(image, kernel_dil, iterations = 1)
     return edges
 flag = False
-prev_frame_time = 0
-new_frame_time = 0
-fps_list = []
+size = (720, 480)
+result = cv2.VideoWriter('demo.avi', cv2.VideoWriter_fourcc(*'MJPG'), 10, size)
 while cap.isOpened():
     ret, frame = cap.read()
-    frame = cv2.resize(frame, (720, 480))
+    frame = cv2.resize(frame, size)
     if not ret:
         break
     h = frame.shape[0]
@@ -33,19 +32,27 @@ while cap.isOpened():
     thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 5)
     canny = cv2.Canny(img, 9, 0, True)
     edges = preprocessing(canny)
-    cnt = sorted(cv2.findContours(edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)[-2], key=cv2.contourArea)[-1]
-    mask = np.zeros((h, w), np.uint8)
-    masked = cv2.drawContours(mask, [cnt], -1, 255, -1)
-    kernel = np.ones((50,50), np.uint8)
-    kernel_1 = np.ones((2,2), np.uint8)
-    masked = cv2.erode(masked, kernel, iterations = 1)
-    masked = cv2.erode(masked, kernel_1, iterations = 3)
-    dst_fg = cv2.bitwise_and(frame, frame, mask=masked)
-    mask_inversed = cv2.bitwise_not(masked)
-    dst_bg = cv2.bitwise_and(bg, bg, mask=mask_inversed)
-    dst = cv2.bitwise_or(dst_fg, dst_bg)
-    cv2.imshow('frame', dst_fg)
+    contours = cv2.findContours(edges, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)[-2]
+    if contours:
+        cnt = max(contours, key=cv2.contourArea)
+
+        mask = np.zeros((h, w), np.uint8)
+        masked = cv2.drawContours(mask, [cnt], -1, 255, -1)
+        kernel = np.ones((50,50), np.uint8)
+        kernel_1 = np.ones((2,2), np.uint8)
+        masked = cv2.erode(masked, kernel, iterations = 1)
+        masked = cv2.erode(masked, kernel_1, iterations = 3)
+        dst_fg = cv2.bitwise_and(frame, frame, mask=masked)
+        mask_inversed = cv2.bitwise_not(masked)
+        dst_bg = cv2.bitwise_and(bg, bg, mask=mask_inversed)
+        dst = cv2.bitwise_or(dst_fg, dst_bg)
+        cv2.imshow('frame', dst_fg)
+        result.write(dst_fg)
+    else:
+        cv2.imshow('frame', frame)
+        result.write(frame)
     if cv2.waitKey(25) == ord('q'):
         break
 cap.release()
 cv2.destroyAllWindows()
+print('Lưu video thành công!')
