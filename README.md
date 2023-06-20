@@ -1,4 +1,4 @@
-# Computer Vision Basic and Image Processing
+# Basic Computer Vision and Image Processing
 
 My Computer Vision Basic and Image Processing projects with OpenCV including: histogram equalizatiom, background removal, line detection, seam carving, image blending, template matching...
 Note: require <a href='https://opencv.org/'>OpenCV</a>
